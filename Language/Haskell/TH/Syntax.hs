@@ -35,7 +35,7 @@ module Language.Haskell.TH.Syntax(
 
 	-- * The algebraic data types
 	-- $infix
-	Dec(..), Exp(..), Con(..), Type(..), TyVarBndr(..), Kind(..),Cxt,
+	Dec(..), Exp(..), Con(..), Type(..), TyVarBndr(..), Kind, Cxt,
         TyLit(..),
 	Pred(..), Match(..),  Clause(..), Body(..), Guard(..), Stmt(..),
 	Range(..), Lit(..), Pat(..), FieldExp, FieldPat, 
@@ -994,6 +994,8 @@ data Type = ForallT [TyVarBndr] Cxt Type  -- ^ @forall <vars>. <ctxt> -> <type>@
           | PromotedTupleT Int            -- ^ @'(), '(,), '(,,), etc.@
           | PromotedNilT                  -- ^ @'[]@
           | PromotedConsT                 -- ^ @(':)@
+          | StarT                         -- ^ @*@
+          | ConstraintT                   -- ^ @Constraint@
       deriving( Show, Eq, Data, Typeable )
 
 data TyVarBndr = PlainTV  Name            -- ^ @a@
@@ -1004,9 +1006,7 @@ data TyLit = NumTyLit Integer
            | StrTyLit String
   deriving ( Show, Eq, Data, Typeable )
 
-data Kind = StarK                         -- ^ @'*'@
-          | ArrowK Kind Kind              -- ^ @k1 -> k2@
-      deriving( Show, Eq, Data, Typeable )
+type Kind = Type
 
 -----------------------------------------------------
 --		Internal helper functions

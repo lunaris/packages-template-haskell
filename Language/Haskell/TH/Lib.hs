@@ -529,11 +529,29 @@ plainTV = PlainTV
 kindedTV :: Name -> Kind -> TyVarBndr
 kindedTV = KindedTV
 
-starK :: Kind
-starK = StarK
+varK :: Name -> Kind
+varK = VarT
 
-arrowK :: Kind -> Kind -> Kind
-arrowK = ArrowK
+conK :: Name -> Kind
+conK = ConT
+
+tupleK :: Int -> Kind
+tupleK = TupleT
+
+arrowK :: Kind
+arrowK = ArrowT
+
+listK :: Kind
+listK = ListT
+
+appK :: Kind -> Kind -> Kind
+appK = AppT
+
+starK :: Kind
+starK = StarT
+
+constraintK :: Kind
+constraintK = ConstraintT
 
 -------------------------------------------------------------------------------
 -- *   Callconv

@@ -395,6 +395,8 @@ pprParendType (PromotedTupleT 0)  = text "'()"
 pprParendType (PromotedTupleT n)  = quoteParens (hcat (replicate (n-1) comma))
 pprParendType PromotedNilT        = text "'[]"
 pprParendType PromotedConsT       = text "(':)"
+pprParendType StarT               = char '*'
+pprParendType ConstraintT         = text "Constraint"
 pprParendType other               = parens (ppr other)
 
 instance Ppr Type where
@@ -436,14 +438,6 @@ instance Ppr TyLit where
 instance Ppr TyVarBndr where
     ppr (PlainTV nm)    = ppr nm
     ppr (KindedTV nm k) = parens (ppr nm <+> text "::" <+> ppr k)
-
-instance Ppr Kind where
-    ppr StarK          = char '*'
-    ppr (ArrowK k1 k2) = pprArrowArgKind k1 <+> text "->" <+> ppr k2
-
-pprArrowArgKind :: Kind -> Doc
-pprArrowArgKind k@(ArrowK _ _) = parens (ppr k)
-pprArrowArgKind k              = ppr k
 
 ------------------------------
 pprCxt :: Cxt -> Doc

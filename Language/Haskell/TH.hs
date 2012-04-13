@@ -6,7 +6,7 @@ For other documentation, refer to:
 -}
 module Language.Haskell.TH(
 	-- * The monad and its operations
-	Q, runQ, 
+	Q, runQ,
 	report,		  -- :: Bool -> String -> Q ()
 	recover, 	  -- :: Q a -> Q a -> Q a
 	reify, 		  -- :: Name -> Q Info
@@ -22,23 +22,23 @@ module Language.Haskell.TH(
 	nameBase,	-- :: Name -> String
 	nameModule,	-- :: Name -> Maybe String
 	tupleTypeName, tupleDataName,	-- Int -> Name
-	
+
     -- * The algebraic data types
     -- | The lowercase versions (/syntax operators/) of these constructors are
     -- preferred to these constructors, since they compose better with
     -- quotations (@[| |]@) and splices (@$( ... )@)
-	Dec(..), Exp(..), Con(..), Type(..), TyVarBndr(..), Kind(..), Cxt,
+	Dec(..), Exp(..), Con(..), Type(..), TyVarBndr(..), TyLit(..), Kind, Cxt,
 	Pred(..), Match(..), Clause(..), Body(..), Guard(..), Stmt(..),
-	Range(..), Lit(..), Pat(..), FieldExp, FieldPat, 
+	Range(..), Lit(..), Pat(..), FieldExp, FieldPat,
 	Strict(..), Foreign(..), Callconv(..), Safety(..), Pragma(..),
 	InlineSpec(..), FunDep(..), FamFlavour(..), Info(..), Loc(..),
 	Fixity(..), FixityDirection(..), defaultFixity, maxPrecedence,
 
     -- * Library functions
     -- ** Abbreviations
-	InfoQ, ExpQ, DecQ, DecsQ, ConQ, TypeQ, CxtQ, PredQ, MatchQ, ClauseQ, BodyQ,
-	GuardQ, StmtQ, RangeQ, StrictTypeQ, VarStrictTypeQ, PatQ, FieldPatQ,
-        InlineSpecQ,
+	InfoQ, ExpQ, DecQ, DecsQ, ConQ, TypeQ, TyLitQ, CxtQ, PredQ, MatchQ, ClauseQ,
+  BodyQ, GuardQ, StmtQ, RangeQ, StrictTypeQ, VarStrictTypeQ, PatQ, FieldPatQ,
+  InlineSpecQ,
 
     -- ** Constructors lifted to 'Q'
     -- *** Literals
@@ -51,11 +51,11 @@ module Language.Haskell.TH(
 	fieldPat,
 
     -- *** Pattern Guards
-	normalB, guardedB, normalG, normalGE, patG, patGE, match, clause, 
+	normalB, guardedB, normalG, normalGE, patG, patGE, match, clause,
 
     -- *** Expressions
 	dyn, global, varE, conE, litE, appE, uInfixE, parensE,
-	infixE, infixApp, sectionL, sectionR, 
+	infixE, infixApp, sectionL, sectionR,
 	lamE, lam1E, tupE, condE, letE, caseE, appsE,
 	listE, sigE, recConE, recUpdE, stringE, fieldExp,
     -- **** Ranges
@@ -63,18 +63,23 @@ module Language.Haskell.TH(
 
     -- ***** Ranges with more indirection
     arithSeqE,
-    fromR, fromThenR, fromToR, fromThenToR, 
+    fromR, fromThenR, fromToR, fromThenToR,
     -- **** Statements
     doE, compE,
     bindS, letS, noBindS, parS,
 
     -- *** Types
-	forallT, varT, conT, appT, arrowT, listT, tupleT, sigT,
+	forallT, varT, conT, appT, arrowT, listT, tupleT, sigT, litT,
     promotedT, promotedTupleT, promotedNilT, promotedConsT,
+    -- **** Type literals
+    numTyLit, strTyLit,
     -- **** Strictness
 	isStrict, notStrict, strictType, varStrictType,
     -- **** Class Contexts
     cxt, classP, equalP, normalC, recC, infixC,
+
+    -- *** Kinds
+  varK, conK, tupleK, arrowK, listK, appK, starK, constraintK,
 
     -- *** Top Level Declarations
     -- **** Data
@@ -83,7 +88,7 @@ module Language.Haskell.TH(
     classD, instanceD, sigD,
     -- **** Type Family / Data Family
     familyNoKindD, familyKindD, dataInstD,
-    newtypeInstD, tySynInstD, 
+    newtypeInstD, tySynInstD,
     typeFam, dataFam,
     -- **** Foreign Function Interface (FFI)
     cCall, stdCall, unsafe, safe, forImpD,
@@ -94,7 +99,7 @@ module Language.Haskell.TH(
 
 	-- * Pretty-printer
     Ppr(..), pprint, pprExp, pprLit, pprPat, pprParendType
-	
+
    ) where
 
 import Language.Haskell.TH.Syntax
