@@ -485,6 +485,18 @@ sigT t k
       t' <- t
       return $ SigT t' k
 
+promotedT :: Name -> TypeQ
+promotedT = return . PromotedT
+
+promotedTupleT :: Int -> TypeQ
+promotedTupleT i = return (PromotedTupleT i)
+
+promotedNilT :: TypeQ
+promotedNilT = return PromotedNilT
+
+promotedConsT :: TypeQ
+promotedConsT = return PromotedConsT
+
 isStrict, notStrict, unpacked :: Q Strict
 isStrict = return $ IsStrict
 notStrict = return $ NotStrict

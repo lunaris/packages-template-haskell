@@ -70,6 +70,7 @@ module Language.Haskell.TH(
 
     -- *** Types
 	forallT, varT, conT, appT, arrowT, listT, tupleT, sigT,
+    promotedT, promotedTupleT, promotedNilT, promotedConsT,
     -- **** Strictness
 	isStrict, notStrict, strictType, varStrictType,
     -- **** Class Contexts

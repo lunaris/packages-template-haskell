@@ -990,6 +990,10 @@ data Type = ForallT [TyVarBndr] Cxt Type  -- ^ @forall <vars>. <ctxt> -> <type>@
           | AppT Type Type                -- ^ @T a b@
           | SigT Type Kind                -- ^ @t :: k@
           | LitT TyLit                    -- ^ @0,1,2, etc.@
+          | PromotedT Name                -- ^ @'T@
+          | PromotedTupleT Int            -- ^ @'(), '(,), '(,,), etc.@
+          | PromotedNilT                  -- ^ @'[]@
+          | PromotedConsT                 -- ^ @(':)@
       deriving( Show, Eq, Data, Typeable )
 
 data TyVarBndr = PlainTV  Name            -- ^ @a@
