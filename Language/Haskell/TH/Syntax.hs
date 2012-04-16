@@ -1002,8 +1002,8 @@ data TyVarBndr = PlainTV  Name            -- ^ @a@
                | KindedTV Name Kind       -- ^ @(a :: k)@
       deriving( Show, Eq, Data, Typeable )
 
-data TyLit = NumTyLit Integer
-           | StrTyLit String
+data TyLit = NumTyLit Integer             -- ^ @2@
+           | StrTyLit String              -- ^ @"Hello"@
   deriving ( Show, Eq, Data, Typeable )
 
 type Kind = Type

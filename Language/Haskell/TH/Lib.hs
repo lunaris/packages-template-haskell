@@ -470,8 +470,8 @@ arrowT = return ArrowT
 listT :: TypeQ
 listT = return ListT
 
-litT :: TyLit -> TypeQ
-litT l = return (LitT l)
+litT :: TyLitQ -> TypeQ
+litT l = fmap LitT l
 
 tupleT :: Int -> TypeQ
 tupleT i = return (TupleT i)
